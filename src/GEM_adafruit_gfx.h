@@ -50,7 +50,7 @@
 
 // Macro constants (aliases) for Adafruit GFX font families used to draw menu
 #define GEM_FONT_BIG       &Fixed6x12
-#define GEM_FONT_SMALL     &TomThumbMono
+#define GEM_FONT_SMALL     &Fixed6x12
 
 // Macro constants (aliases) for the keys (buttons) used to navigate and interact with menu
 #define GEM_KEY_NONE 0    // No key presses are detected
@@ -127,6 +127,7 @@ class GEM_adafruit_gfx {
     GEM_adafruit_gfx& setForegroundColor(uint16_t color);               // Set foreground color of the menu (default is 0xFF)
     GEM_adafruit_gfx& setBackgroundColor(uint16_t color);               // Set background color of the menu (default is 0x00)
     GEM_adafruit_gfx& invertKeysDuringEdit(bool invert = true);         // Turn inverted order of characters during edit mode on or off
+    GEM_adafruit_gfx& allowRollbackDuringEdit(bool rollback = false);    // Turn rollback of cursor when reaching right end during edit mode on or off
     GEM_VIRTUAL GEM_adafruit_gfx& init();                               // Init the menu (load necessary sprites into RAM of the SparkFun Graphic LCD Serial Backpack, display GEM splash screen, etc.)
     GEM_VIRTUAL GEM_adafruit_gfx& reInit();                             // Reinitialize the menu (apply GEM specific settings to AltSerialGraphicLCD library)
     GEM_adafruit_gfx& setMenuPageCurrent(GEMPage& menuPageCurrent);     // Set supplied menu page as current
@@ -158,6 +159,7 @@ class GEM_adafruit_gfx {
     FontFamiliesAGFX _fontFamilies = {GEM_FONT_BIG, GEM_FONT_SMALL};
     byte _textSize = 1;
     bool _invertKeysDuringEdit = false;
+    bool _allowRollbackDuringEdit = false;
     GEM_VIRTUAL byte getMenuItemTitleLength();
     GEM_VIRTUAL byte getMenuItemValueLength();
     Splash _splash;

@@ -313,6 +313,11 @@ GEM_adafruit_gfx& GEM_adafruit_gfx::invertKeysDuringEdit(bool invert) {
   return *this;
 }
 
+GEM_adafruit_gfx& GEM_adafruit_gfx::allowRollbackDuringEdit(bool rollback) {
+  _allowRollbackDuringEdit = rollback;
+  return *this;
+}
+
 GEM_adafruit_gfx& GEM_adafruit_gfx::init() {
   _agfx.setTextSize(_textSize);
   _agfx.setTextWrap(false);
@@ -782,12 +787,18 @@ void GEM_adafruit_gfx::nextEditValueCursorPosition() {
   if ((_editValueCursorPosition != menuItemValueLength - 1) && (_editValueCursorPosition != _editValueLength - 1) && (_valueString[_editValueCursorPosition] != '\0')) {
     _editValueCursorPosition++;
   }
+  else if (_allowRollbackDuringEdit) {
+    _editValueCursorPosition = 0;
+  }
   if ((_editValueVirtualCursorPosition != _editValueLength - 1) && (_valueString[_editValueVirtualCursorPosition] != '\0')) {
     _editValueVirtualCursorPosition++;
     if (_editValueCursorPosition == menuItemValueLength - 1) {
       clearValueVisibleRange();
       printMenuItemValue(_valueString, 0, _editValueVirtualCursorPosition - _editValueCursorPosition);
     }
+  }
+  else if (_allowRollbackDuringEdit) {
+    _editValueVirtualCursorPosition = 0;
   }
   chr = _valueString[_editValueVirtualCursorPosition];
   drawEditValueDigit(chr);
@@ -967,12 +978,20 @@ void GEM_adafruit_gfx::nextEditValueSelect() {
   if (_valueSelectNum+1 < select->getLength()) {
     _valueSelectNum++;
   }
+  else if (_allowRollbackDuringEdit) {
+    _valueSelectNum = 0;
+  }
   drawEditValueSelect();
 }
 
 void GEM_adafruit_gfx::prevEditValueSelect() {
+  GEMItem* menuItemTmp = _menuPageCurrent->getCurrentMenuItem();
+  GEMSelect* select = menuItemTmp->select;
   if (_valueSelectNum > 0) {
     _valueSelectNum--;
+  }
+  else if (_allowRollbackDuringEdit) {
+    _valueSelectNum = select->getLength() - 1;
   }
   drawEditValueSelect();
 }
@@ -1118,6 +1137,9 @@ void GEM_adafruit_gfx::dispatchKeyPress() {
           if (_editValueType != GEM_VAL_SELECT) {
             nextEditValueCursorPosition();
           }
+          else {
+            nextEditValueSelect();
+          }
           break;
         case GEM_KEY_DOWN:
           if (_editValueType == GEM_VAL_SELECT) {
@@ -1131,6 +1153,9 @@ void GEM_adafruit_gfx::dispatchKeyPress() {
         case GEM_KEY_LEFT:
           if (_editValueType != GEM_VAL_SELECT) {
             prevEditValueCursorPosition();
+          }
+          else {
+            prevEditValueSelect();
           }
           break;
         case GEM_KEY_CANCEL:
