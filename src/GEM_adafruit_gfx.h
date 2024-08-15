@@ -50,7 +50,7 @@
 
 // Macro constants (aliases) for Adafruit GFX font families used to draw menu
 #define GEM_FONT_BIG       &Fixed6x12
-#define GEM_FONT_SMALL     &Fixed6x12
+#define GEM_FONT_SMALL     &TomThumbMono
 
 // Macro constants (aliases) for the keys (buttons) used to navigate and interact with menu
 #define GEM_KEY_NONE 0    // No key presses are detected
