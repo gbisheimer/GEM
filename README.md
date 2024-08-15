@@ -62,7 +62,7 @@ Menu created with GEM library comprises of three base elements:
 Installation
 ------------
 
-Library format is compatible with Arduino IDE 1.5.x+. There are two ways to install the library:
+Library format is compatible with Arduino IDE 1.5.x+. There are number of ways to install the library:
 
 - Download ZIP-archive directly from [Releases](https://github.com/Spirik/GEM/releases) section (or Master branch) and extract it into GEM folder inside your Library folder.
 - Using Library Manager (since Arduino IDE 1.6.2): navigate to `Sketch > Include Library > Manage Libraries` inside your Arduino IDE and search for GEM library, then click `Install`. (Alternatively you can add previously downloaded ZIP through `Sketch > Include Library > Add .ZIP Library` menu).
@@ -1188,6 +1188,11 @@ For more details on customization see corresponding section of the [wiki](https:
   *Accepts*: `uint8_t`  
   *Returns*: `GEM_adafruit_gfx&`  
   Set text 'magnification' size (as per Adafruit GFX docs) to supplied value. See Adafruit GFX [documentation](http://adafruit.github.io/Adafruit-GFX-Library/html/class_adafruit___g_f_x.html#a39eb4a8a2c9fa4ab7d58ceffd19535d5) for details on internaly called method of the same name. Sprites (i.e. various menu icons) will be scaled maximum up to two times regardless of the value. If not called explicitly, magnification size will be set to 1. Should be called before `init()`.
+
+* *GEM_adafruit_gfx&* **setSpriteSize(** _uint8_t_ size **)**  `Adafruit GFX version only`  
+  *Accepts*: `uint8_t`  
+  *Returns*: `GEM_adafruit_gfx&`  
+  Set sprite scaling factor if it should be different from the text 'magnification' size set through `setTextSize()` method. Sprites (i.e. various menu icons) will be scaled maximum up to two times regardless of the value. If not called explicitly, equals to the text magnification set with `setTextSize()`. Should be called after `setTextSize()` but before `init()`.
 
 * *GEM_adafruit_gfx&* **setFontBig(** _const GFXfont*_ font = GEM_FONT_BIG[, _byte_ width = 6[, _byte_ height = 8[, _byte_ baselineOffset = 8]]] **)**  `Adafruit GFX version`  
   *Accepts*: `const GFXfont*`[, `byte`[, `byte`[, `byte`]]]  
