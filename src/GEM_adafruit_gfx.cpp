@@ -86,7 +86,7 @@ static const uint8_t logo_bits_scaled [] PROGMEM = {
 
 const Splash logo[] = {
   {logo_width, logo_height, logo_bits},
-  {logo_width_scaled, logo_height_scaled, logo_bits_scaled}
+  {logo_width, logo_height, logo_bits},
 };
 
 // Sprites of the UI elements used to draw menu
